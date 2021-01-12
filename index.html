@@ -337,6 +337,9 @@
                 ></textarea>
               </div>
             </div>
+            <div class="alert alert-danger" role="alert">
+              Submit Successfully!
+            </div>
             <input
               type="submit"
               value="Submit"
@@ -407,6 +410,7 @@
     </script>
     <script type="text/javascript">
       window.onload = function () {
+        $('.alert').hide();
         document
           .getElementById('contact-form')
           .addEventListener('submit', function (event) {
@@ -417,10 +421,14 @@
             emailjs.sendForm('service_ppifd7b', 'template_ibddasc', this).then(
               function () {
                 // console.log('SUCCESS!');
-                alert('Submit Successfully');
+                $('.alert').show();
+                setTimeout(() => {
+                  $('.alert').hide();
+                }, 2000);
               },
               function (error) {
                 console.log('FAILED...', error);
+                alert('Submit fail!');
               }
             );
           });
