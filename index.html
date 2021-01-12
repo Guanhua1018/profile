@@ -289,8 +289,8 @@
         </div>
         <div class="card card-body py-5">
           <h3>Get In Touch</h3>
-
-          <form>
+          <form id="contact-form">
+            <input type="hidden" name="contact_number" />
             <div class="form-group">
               <div class="input-group input-group-lg">
                 <div class="input-group-prepend">
@@ -299,6 +299,7 @@
                   ></span>
                 </div>
                 <input
+                  name="user_name"
                   type="text"
                   class="form-control bg-dark text-white"
                   placeholder="Name"
@@ -317,6 +318,7 @@
                   type="email"
                   class="form-control bg-dark text-white"
                   placeholder="Email"
+                  name="user_email"
                 />
               </div>
             </div>
@@ -331,6 +333,7 @@
                 <textarea
                   class="form-control bg-dark text-white"
                   placeholder="Leave your message"
+                  name="message"
                 ></textarea>
               </div>
             </div>
@@ -352,9 +355,6 @@
               href=""
               class="btn btn-outline-light"
               ><i class="fas fa-cloud"></i>Download Resume</a
-            >
-            <a href="./files/resume.PDF" class="btn btn-outline-light"
-              ><i class="fas fa-eye"></i>View Resume</a
             >
           </div>
           <div class="col-md-6"></div>
@@ -392,6 +392,39 @@
         e.preventDefault();
         $(this).ekkoLightbox();
       });
+    </script>
+
+    <!-- EmailJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        // https://dashboard.emailjs.com/admin/integration
+        emailjs.init('user_A13UB4gXa7dHCjwFaDDcn');
+      })();
+    </script>
+    <script type="text/javascript">
+      window.onload = function () {
+        document
+          .getElementById('contact-form')
+          .addEventListener('submit', function (event) {
+            event.preventDefault();
+            // generate a five digit number for the contact_number variable
+            this.contact_number.value = (Math.random() * 100000) | 0;
+            // these IDs from the previous steps
+            emailjs.sendForm('service_ppifd7b', 'template_ibddasc', this).then(
+              function () {
+                // console.log('SUCCESS!');
+                alert('Submit Successfully');
+              },
+              function (error) {
+                console.log('FAILED...', error);
+              }
+            );
+          });
+      };
     </script>
   </body>
 </html>
